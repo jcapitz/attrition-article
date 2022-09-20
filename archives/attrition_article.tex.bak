@@ -1,0 +1,364 @@
+\documentclass[12pt,a4paper,oneside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{times}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fourier}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{commath}
+\usepackage{cancel}
+\usepackage{placeins}
+
+% CODE RENDERING SET UP%%%%%%%
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\author{Mahmoud Albawaneh and Juan Carlos Apitz}
+\title{Fighting College Attrition Through Timely Interventions: A Sequential Machine Learning Model }
+\date{}
+\maketitle
+
+\chapter{Introduction }
+The federal government spends \$234.9 billion on college education by providing student loans and grants (The College Board, 2021), as national policies focus on making higher education accessible to everyone.  As college education costs skyrocket, more than 50\% of undergraduate students graduate in debt (The College Board, 2021).  Consequently, the main goal of higher education institutions is shifting its emphasis to retention from access toward reducing dropouts.  Student attrition is the most complicated problem in the university system (Kim \& Kim, 2018).  Fewer than two-thirds of students graduate within six years (U.S. Department of Education, 2021), and graduation numbers are much lower for Black (42\%) and Hispanic (56\%) students nationally (Musu-Gillette et al., 2018).  Despite numerous efforts to soften its effect, attrition remains one of the most severe issues confronted by four-year universities.  One of the troubling facts about attrition is that it occurs each semester.   
+
+Centered on the idiosyncratic disadvantages of attrition, researchers, policymakers, and educators consider this issue a considerable burden to the university system (Kim \& Kim, 2018).  Hence, attrition negatively affects the economy, contributing to low gain on investment and waste of taxpayer money on higher education. 
+
+College attrition means a student not enrolling in a semester to stay at a university.  This research focuses on attrition during $s_{2}$, $s_{3}$, and $s_{4}$ based on the students who did not enroll in courses.  Since most students voluntarily attrition in the beginning year(s) of their undergraduate college education (Bargmann, Thiele, \& Kauffeld, 2022), this study focuses on the first three semesters of undergraduate education.  Such definition is limited as it includes students who transfer to four-year colleges or due to academic dismissal.   
+
+Several factors contribute to college attrition.  Estimating the future attrition risk in multiple domains, such as personal characteristics, academic preparation (Bishop \& Bailey, 2021; Bargmann, Thiele, \& Kauffeld, 2022), academic performance, and educational cost (Bishop \& Bailey, 2021), were explored mainly using survey research.  However, there is limited research on these factors, and an assortment of predictors should be construed in combination and not in seclusion to help in risk estimation.  To foresee an episode of potential attrition, it is essential to distinguish students who attrition due to low academic performance, a precursor to attrition.  The exact probability model must be constructed on analytical factors integrated into forecasting models using ML algorithms.  Such analytical models could be instrumental for detecting at-risk college students with a greater probability of attrition in several domains to assess individual profiles that suggest impending problems in particular attrition realms.   
+
+Data are an indispensable part of ML.  Due to increased student data, there has been growing attention to student data and ML modeling.  Prediction simulations are valuable in designing prevention strategies to prevent or minimize attrition.  Although complicated, it is necessary to develop ML models to understand and produce predictions regarding the factors contributing to attrition to establish effective control and long-term or short-term prevention strategies and policies.  Predicting student attrition accurately could help alleviate its social and economic costs (Robison et al., 2017). 
+
+This study adds to existing research in various ways. First, this study focuses on prediction by using ML algorithms to find patterns in often rich and unwieldy data. Thus, we added several algorithms, including LR, RF, CatBoost, XGB, and LGBM to identify the best possible ML models for predicting attrition.  Hence, this study extends the understanding of the application and efficacy of ML models in higher education.  This study aims to examine which ML models accurately predict attrition.  Second, this study expanded the prior research using predictive analytics that will account for various predictors (e.g., demographics, pre-entry data, academic performance, and academic goal engagement) by combining data from the first three semesters.  To identify students at risk of attrition in the future, precise risk estimation must be based on pertinent analytical factors integrated into risk prediction models.  Finally, this study identified the most critical features in explaining student attrition.  Analyzing and predicting the reasons for attrition can form a basis for advisement plans, intervention policies, targeted advising, and developing prevention strategies for the university system, advisors, and students.  The ML algorithms’ performances will help us to design web applications to predict students who will attrition in s4 using s1, s2, and s3 performance data.  Such information will help with early intervention and advising at-risk students before dropping out of university.   
+
+
+
+Retention rate is a standard metric used universally by higher education institutions in the United States. It measures institutions ability to retain students over time once students enrolled and started their education journey for the first time at the beginning of their first term or semester. 
+
+\par For 4-year institutions and above, the first-year retention rate is the percentage of first-time or transfer degree-seeking undergraduates who did not persist or did not come back a year later (Began in January 2017 and did not persist or did not come back in January 2018). Therefore, the first-year retention rate ranges between 0% and 100%. For example, Integrated Postsecondary Education Database System (IPEDS) reported 75.5% first-year retention rate for fall 2018 for full-time, first-time bachelor's degree-seeking undergraduates based on 5,135 institutions. This means 24.5% of students who enrolled in fall 2017 did not enroll or come back in fall 2018, which is the working definition of attrition rate.  Although postsecondary institutions usually report retention rate, other institutions report attrition rate, which is the compliment of retention rate.
+ 
+\par The first-year retention rate is widely used in higher education and it is the most popular retention rate metric. In addition, second-year, third-year and fourth-year retention rates are commonly used as retention performance metrics for higher learning institutions. Data and reports on retention rates are published and publicly available on every institution website as well as the institutional research offices websites. Retention rates are accessible and available on the official institutions disclosures, annual reports, institutional and programmatic accreditation reports, and various federal, state and private agencies publications. IPEDS, which is part of the federal department of education, mandates each institution to report first-year retention rates annually due to its importance and significant impact on other performance and academic metrics. Retention rate generally affects continuing student’s enrollment, new enrollment goals, graduation rate and institutional budget.
+
+\par In this step-by-step guide, you will learn how to build classification model utilizing logistic regression to predict which students will enroll or not enroll a year later.  
+
+\par Upon completion of this guide, you will be able to:
+
+\begin{itemize}
+
+\item Understand and explore retention data set 
+\item Prepare retention dataset for machine learning 
+\item Split prepared retention dataset into training and testing datasets
+\item Choose and use proper evaluation metric for machine learning 
+\item Train and fit logistic regression model
+\item Operationalize logistic regression model for new and unseen data
+
+\end{itemize}
+
+\section{Guide Overview}
+
+This guide is divided into the following sections:
+
+\begin{enumerate}
+
+\item Machine Learning Process 
+\item Retention dataset as practical case study 
+\item Exploration and visualization of retention dataset 
+\item Preparation of retention dataset to become machine-learn ready
+\item Model building, training and testing
+\item Model deployment
+
+\end{enumerate}
+
+\section{Machine Learning Process}
+
+Building a machine-learning model from start to finish is a seven steps process. It is crucial that this process is followed sequentially step by step without skipping, avoiding, ignoring or discarding any step. Following the seven steps process properly and diligently from step one through step seven ensures production of an accurate and reliable machine-learning model that can be put in use in production environment. 
+
+\par The seven steps of the machine learning process are:
+
+\begin{enumerate}
+
+\item \textbf{Define problem statement:}\\
+It is important to define the problem or the challenge with explicit objectives and proper scope. For the retention rate dataset case study, the primary objective is to build a classification model in order to predict which students will enroll or not enroll in the following fall semester who previously enrolled in the previous fall semester. The emphasis is on prediction not on model interpretation or explanation. Therefore, the strategy is to achieve a high value for the accuracy or any other appropriate chosen metric regardless of the machine learning model complexity and explanatory power.    
+
+\item \textbf{Extract or Collect data }\\
+In higher education institutions, data is usually available in traditional databases or data warehouses. Based on the problem statement definition, the required dataset is queried from different tables within the database or data warehouse then merged using common institutional identifier. This represents an example of direct extraction of the required dataset from institutional database.  On the contrary, the required dataset may not exist in the institutional databases or data warehouses. In this particular case, data will need to be collected using appropriate data collection methods such as institutional surveys.    
+
+\item \textbf{Prepare data}\\
+Once the required dataset is either extracted or collected, data must be prepared properly in order to be digested and processed by the machine-learning models. The basic tasks of data preparation includes:
+
+\begin{itemize}
+
+\item Scaling or normalizing the numerical data 
+\item Converting string or text data into numerical data  
+\item Removing or imputing missing values
+\item Handling imbalanced dataset (i.e. retention rate dataset is example of imbalanced dataset)
+
+\end{itemize}
+
+\item \textbf{Split data into training and testing }\\
+It is critical to split the prepared dataset into training and testing dataset. The common rule for splitting the prepared dataset is the 70\%/30\% rule. This means 70\% of the entire prepared dataset is allocated for training and the other 30\% is used for testing. The splitting rule is a hybrid of art and science and it depends primarily on the amount of available data despite the popularity of the 70\%/30\% common rule. A common mistake is to use the testing dataset for data exploration, correlation and visualization. The testing dataset must be put aside and never used except for model evaluation.  
+ 
+\item \textbf{Choose a machine learning model}\\
+There are numerous machine-learning models to choose from varying in model complexity and the number of hyper-parameters. Hence choosing the best model can be tricky and may require trying different models. Choosing a machine-learning model depends on the problem statement definition. If the primary goal is prediction not interpretation then the model producing the highest value for the evaluation metric should be chosen. On other hand, if the primary goal is interpretation of the findings then a simple and highly interpretable model should be selected. 
+
+\item \textbf{Fit the chosen machine learning model}\\
+Once the dataset is properly prepared and a machine-learning model is selected, the model building begins by performing the following three essential tasks:
+
+\begin{itemize}
+\item Fit or fine-tune the machine-learning model using the training dataset. Fine-tuning the machine-learning model is finding the best or optimum hyper-parameters. 
+\item Evaluate the fitted or fine-tuned machine-learning model using the testing dataset. 
+\item Select the fitted or fine-tuned machine-learning model producing the highest value for the chosen evaluation metric outlined in step one
+\end{itemize}
+  
+
+\item \textbf{Deploy the fitted or the fine-tuned machine learning model}\\
+At this stage, the fine-tuned machine-learning model is ready for deployment in production environment. This is where numerous machine-learning projects fail and tend not to make any further progress. The successful deployment of the machine-learning model takes into account:
+
+\begin{itemize}
+
+\item Comprehensive understanding of the frontline users of model. The model deployment must be simple, intuitive, and user-friendly and packaged in simple-plain English tailored to how frontline users operate.
+\item The deployed model should only have the necessary information for the frontline users to assist them in taking action or no action.
+\item The frontline users should be able to process the insights from the deployed model at glance within 3 to 10 seconds. 
+\item Provide proper training and support for the frontline users during the model deployment.
+
+\end{itemize}
+
+
+\end{enumerate}
+
+
+
+
+
+
+\chapter{Basic Data Preparation}
+
+\section{Setting Up the Retention Data}
+
+Before we can implement a retention analysis algorithm, it is necessary to set up the retention data and corresponding variables. In general, the structure of the data will have two distinct categories: the dependent variables and the independent variables. \par 
+
+The dependent variable represents the outcome we want to predict and to be consistent with machine learning terminology, we will refer to this variable as the response. In this case we want to predict whether a student is retained from an academic period to the next. For example, for a cohort of students beginning in the Fall of 2015 we might be interested if one year later they are retained. Thus, the value of the response variable, lets call it $y$, will be True if the student does \textit{\underline{not}} come back in Fall 2016 and False otherwise. In this case $y$ is called a binary variable which can only take the value True or False. Sometimes we may want to represent True with the number 1 and False with the number 0.
+
+\par The independent variables are those variables that influence the response variable $y$. Again, to be consistent with machine learning terminology, we will refer to this variable(s) as the feature(s). In retention analysis it is typical to use a combination of demographic and academic performance variables and metrics, lets call them $X$, where $X$ refers to a tabular matrix where each row represents a student observation and each column represents a unique variable.
+
+\par To illustrate this process, it is best to go through an example using data analysis tools available in the python ecosystem, namely Pandas:
+
+\subsection{Importing Data from a Comma Separated Values (CSV) File} 
+
+In our example, we have a data file that contains retention data, including both the response variable and its features. The name of the file is `retention\_ data\_ raw\_sm .csv'. To read this file we import Pandas and then read the file:
+
+
+\lstset{language=Python}
+\lstset{frame=lines}
+%\lstset{caption={Insert code directly in your document}}
+\lstset{label={lst:code_direct}}
+%\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}
+import pandas as pd
+
+df = pd.read_csv('retention_data_raw_sm.csv',index_col='EMPLID',)
+
+print(df.shape)
+
+df.head()
+\end{lstlisting}
+
+In the above code we use three common commands: read\_ csv, print, and the method .head(). The command read\_ csv reads the csv file and loads it into memory. Then we use print to print the shape (size) of the data table. And finally the .head() method is a command used to show the first few rows of a large dataset. In figure \ref{fig1} we show the contents of the raw data. This particular dataset has 4,506 rows (observations) and 8 columns (variables). Now the analyst is ready to pull the dependent variable an the set of independent variables need for the retention analysis.
+
+%%Figure \ref{fig1} below shows the distribution of key variables:
+%\begin{figure}[ht!]
+%%\begin{center}
+%\includegraphics[scale=.525]{fig1_df.png}
+%\caption{Output from reading the raw data file}
+%\label{fig1}
+%%\end{center}
+%\end{figure}
+%
+%\subsection{Setting of the Dependent and Independent Variable}
+%
+%Now that the data is available in the python environment, it is a good idea to separate the response from its features. The reason for this will become obvious once the machine learning model is set up using scikit-learn, a popular machine learning library in python which we will use extensively.
+%
+%\par In our example dataset, the column named RET\_ 2164 takes a value of True if a student from the Fall 2015 cohort enrolled during the academic period Fall 2016, otherwise it takes the value False. In other words RET\_ 2164 is our response variable. The rest of the variables are the model's features. To separate the response from the features we write the simple code below:
+%
+%\lstset{language=Python}
+%\lstset{frame=lines}
+%\lstset{label={lst:code_direct}}
+%\begin{lstlisting}
+%y = df.RET_2164
+%print('RESPONSE VARIABLE:\n',y.head())
+%
+%X = df.drop(columns='RET_2164')
+%print('FEATURES:\n',X.head())
+%\end{lstlisting}
+%
+%\begin{figure}[ht!]
+%\includegraphics[scale=.65]{fig2_res_feat.png}
+%%\caption{Output from reading the raw data file}
+%\label{fig2}
+%\end{figure}
+%
+%Now that $y$ and $X$ are separate variables, we are ready to create our training, validation and test datasets.
+%
+%\section{Creating the Training, Validation and Test Datasets}
+%
+%Before a machine learning model is developed and implemented, there are three key steps that must be taken in order to evaluate the "skill" of the model in terms of the predictive task. 
+%First, the model must see as many examples as possible in order to "learn" from the data. This step is called training. Next, the model must be calibrated by setting certain external parameters, which we will refer here as hyper-parameters, to a level that provides better results based on a predetermined objective. This is the validation step. Lastly, the model must be tested to assess the skill of the model. This step is appropriately called the testing step.
+%
+%\par To prepare the data and accomplish these three steps it is necessary split the data into two  sets: \textbf{the training \& validation set and the test set}. To split the data simply take a stratified random sample of say 75\% of samples for training the model and hold out the remaining 25\% for testing. There is nothing special about 75\% and 25\%, in practice it is typical to see training sets that comprise anywhere between 70\% to 90\% of the entire dataset. Deciding what this proportion should be depends, for the most part, on the size of the original dataset. Larger datasets allow for greater proportions of the data to be allocated to the training set.
+%
+%\par As final point, the reason a stratified sample is necessary is because we want the resulting training and test sets to reflect any imbalance present in the response variable. Imbalance is a ubiquitous condition in higher education data. In the retention analysis case, we only expect a small proportion of students to not return each academic term (otherwise that institution will not be in business much longer). A quick way to find the proportion of True values in the response variable is to simply take the mean of the response variable vector:
+%
+%\lstset{language=Python}
+%\lstset{frame=lines}
+%\lstset{label={lst:code_direct}}
+%\begin{lstlisting}
+%y.mean()
+%\end{lstlisting}
+%
+%\begin{figure}[ht!]
+%\includegraphics[scale=.65]{fig3_ymean.png}
+%%\caption{Output from reading the raw data file}
+%\label{fig3}
+%\end{figure}
+%
+%The above calculation indicates that only about 10.4\% of students did not return in the Fall 2016 academic period. Hence, we want a similar proportion of the samples in the training and test sets to be observations of students who did not return. The basic code to generate the stratified training/validation and test sets and print some results is shown below: 
+%
+%\lstset{language=Python}
+%\lstset{frame=lines}
+%\lstset{label={lst:code_direct}}
+%\begin{lstlisting}
+%from sklearn.model_selection import train_test_split
+%
+%random_state = 42
+%
+%X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=.25, 
+%				stratify=y, random_state=random_state)
+%
+%print('Training size: ',X_train.shape,'\nTest size:     ',X_test.shape)
+%
+%print('% not retained in training set: {:.2f}'.format(y_train.mean()),
+%				'\n% not retained in testing set:  {:.2f}'.format(y_test.mean()))
+%
+%\end{lstlisting}
+%
+%\begin{figure}[ht!]
+%\includegraphics[scale=.65]{fig4_train_test.png}
+%%\caption{Output from reading the raw data file}
+%\label{fig3}
+%\end{figure}
+%
+%\par Notice that in this code we import the sub-module \textit{train\_ test\_ split} from the scikit-learn library's module \textit{model\_ selection} in order to generate the training and test sets. The parameter $\text{stratify}=y$ essentially uses the response $y$ to determine the proportion of samples having $y=\text{True}$ in the training and test sets. In this example, about 10\% of the samples have $y=\text{True}$.
+%
+%\par Now that the retention data is prepared and we have a stratified training and testing set, we are ready to build our first Logistic Regression Model.
+%
+%\chapter{Building a Retention Prediction Model with Logistic Regression}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%This is the actual code we used in our first model:
+%%\lstset{language=Python}
+%%\lstset{frame=lines}
+%%\lstset{caption={Insert code directly in your document}}
+%%\lstset{label={lst:code_direct}}
+%%\lstset{basicstyle=\footnotesize}
+%%\begin{lstlisting}
+%%weights = {0:10,1:1}
+%%clf = LogisticRegression(penalty='elasticnet', 
+%%                         solver='saga', 
+%%                         #class_weight=weights, 
+%%                         random_state=random_state)
+%%
+%%param_grid = {'C':[0.0001,0.001,0.01,0.1,1],
+%%              'l1_ratio':[0,0.0001,0.001,0.01,0.1,1]
+%%              }
+%%
+%%grid_clf = GridSearchCV(clf, param_grid, scoring=f05, cv=cv)
+%%grid_clf.fit(X_train, y_train)
+%%
+%%print('Best Score:', grid_clf.best_score_,
+%%     'at:', grid_clf.best_params_)
+%%\end{lstlisting}
+%
+%%We can also insert figures:
+%%
+%%Figure \ref{fig1} below shows the distribution of key variables:
+%%\begin{figure}[ht!]
+%%\begin{center}
+%%\includegraphics[scale=.5]{Selection_050.png}
+%%\caption{Some distributions}
+%%\label{fig1}
+%%\end{center}
+%%\end{figure}
+%%
+%%And of course we can render beautiful math equations:
+%%
+%%\begin{enumerate}[a)]
+%%\item{
+%%First, let $Z=X_1-X_2$ and use the moment generating function method to find the distribution of $Z$:
+%%\[
+%%M_z(t)=E\left(e^{t^2}\right)
+%%\]
+%%Implies that 
+%%\[
+%%Z\sim N(0,2)
+%%\]
+%%\[
+%%f(z)=\dfrac{1}{\sqrt{4\pi}}e^{-\frac{z^2}{4}}
+%%\]
+%%}
+%%\item{
+%%Then by definition:
+%%\[
+%%E\abs{Z}=\dfrac{1}{\sqrt{4\pi}}\int_{-\infty}^\infty \abs{z}e^{-\frac{z^2}{4}}dz
+%%\]
+%%\[
+%%=\dfrac{1}{\sqrt{4\pi}}\left[-\int_{-\infty}^0 z e^{-\frac{z^2}{4}}dz+\int^{\infty}_0 z e^{-\frac{z^2}{4}}dz\right]
+%%\]
+%%substituting $u=\frac{z^2}{4}$:
+%%\[
+%%=\dfrac{1}{\sqrt{\pi}}\left[-\int_{-\infty}^0 e^{-u}du+\int^{\infty}_0 e^{-u}du\right]
+%%\]
+%%\[
+%%=\dfrac{1}{\sqrt{\pi}}\left[(e^{-u})\Bigr{|}_{-\infty}^0-(e^{-u})\Bigr{|}^{\infty}_0\right]
+%%\]
+%%\[
+%%=\dfrac{2}{\sqrt{\pi}}
+%%\]
+%%}
+%%
+%%\end{enumerate}
+
+\end{document}
